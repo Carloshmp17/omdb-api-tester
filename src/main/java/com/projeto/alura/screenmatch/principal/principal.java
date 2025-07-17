@@ -1,9 +1,12 @@
 package com.projeto.alura.screenmatch.principal;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
+import com.projeto.alura.screenmatch.model.DadosEpisodios;
 import com.projeto.alura.screenmatch.model.DadosSerie;
 import com.projeto.alura.screenmatch.model.DadosTemporada;
 import com.projeto.alura.screenmatch.service.ConsumoApi;
@@ -45,6 +48,17 @@ public class principal {
 
         // REFERENCIA
         // temporadas.ForEach(System.out::println)  é o mesmo que temporadas.ForEach(t -> System.out.println(t))
+
+        List<DadosEpisodios> dadosEpisodios = temporadas.stream()
+        .flatMap(t -> t.episodios().stream())
+        .collect(Collectors.toList());
+
+        System.out.println("\nTop 5 episodios");
+        dadosEpisodios.stream()
+        .filter(e -> !e.avaliacao().equalsIgnoreCase("N/A"))
+        .sorted(Comparator.comparing(DadosEpisodios::avaliacao).reversed())
+        .limit(5)
+        .forEach(System.out::println);
         
     }
 }
