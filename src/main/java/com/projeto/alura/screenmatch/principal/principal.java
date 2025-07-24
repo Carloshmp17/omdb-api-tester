@@ -3,7 +3,7 @@ package com.projeto.alura.screenmatch.principal;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -72,18 +72,18 @@ public class principal {
 
         episodios.forEach(System.out::println);
 
-        System.out.println("Digite um titulo: ");
-        var trechoTitulo = leitura.nextLine();
+        // System.out.println("Digite um titulo: ");
+        // var trechoTitulo = leitura.nextLine();
         // Optional será um conteiner que irá armazenar um episodio caso ele exista 
-        Optional <Episodio> episodioBuscado = episodios.stream().filter(e -> e.getTitulo().toUpperCase().contains(trechoTitulo.toUpperCase()))
-        .findFirst();
+        // Optional <Episodio> episodioBuscado = episodios.stream().filter(e -> e.getTitulo().toUpperCase().contains(trechoTitulo.toUpperCase()))
+        // .findFirst();
 
-        if(episodioBuscado.isPresent()){
-            System.out.println("Episodio encontrado!");
-            System.out.println("Temporada: " + episodioBuscado.get().getTemporada());
-        } else{
-            System.out.println("Episodio não encontrado!");
-        }
+        // if(episodioBuscado.isPresent()){
+        //     System.out.println("Episodio encontrado!");
+        //     System.out.println("Temporada: " + episodioBuscado.get().getTemporada());
+        // } else{
+        //     System.out.println("Episodio não encontrado!");
+        // }
 
         // System.out.println("Digite uma data: ");
         // var ano = leitura.nextInt();
@@ -97,6 +97,10 @@ public class principal {
         //     "\nEpisodio: " + e.getTitulo() +
         //     "\nData de laçamento: " + e.getDataLancamento().format(formatador)
         // ));
+
+        Map <Integer, Double> avaliacoesPorTemporada = episodios.stream().filter(e -> e.getAvaliacao() > 0.0).collect(Collectors.groupingBy(Episodio::getTemporada, Collectors.averagingDouble(Episodio::getAvaliacao)));
+
+        System.out.println(avaliacoesPorTemporada);
 
     }
 }
