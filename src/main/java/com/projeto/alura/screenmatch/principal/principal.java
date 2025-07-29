@@ -56,7 +56,7 @@ public class principal {
     private DadosSerie getDadosSerie(){
         System.out.println("Digite o nome da serie para buscar: ");
         var nomeSerie = leitura.nextLine();
-        var json = consumo.obterDados(ENDERECO + nomeSerie.replace(" ", "+"));
+        var json = consumo.obterDados(ENDERECO + nomeSerie.replace(" ", "+") + API_KEY);
         DadosSerie dados = conversor.obterDados(json, DadosSerie.class);
 
         return dados;
@@ -67,7 +67,7 @@ public class principal {
         List<DadosTemporada> temporadas = new ArrayList<>();
 
         for(int i = 1; i <= dadosSerie.totalTemporadas(); i++){
-            var json = consumo.obterDados(ENDERECO + dadosSerie.titulo().replace(" ", "+"));
+            var json = consumo.obterDados(ENDERECO + dadosSerie.titulo().replace(" ", "+" + API_KEY));
             DadosTemporada dadosTemporada = conversor.obterDados(json, DadosTemporada.class);
             temporadas.add(dadosTemporada);
         }
