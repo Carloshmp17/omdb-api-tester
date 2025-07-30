@@ -1,11 +1,14 @@
 package com.projeto.alura.screenmatch.principal;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import com.projeto.alura.screenmatch.model.DadosSerie;
 import com.projeto.alura.screenmatch.model.DadosTemporada;
+import com.projeto.alura.screenmatch.model.Serie;
 import com.projeto.alura.screenmatch.service.ConsumoApi;
 import com.projeto.alura.screenmatch.service.ConverteDados;
 
@@ -84,6 +87,9 @@ public class principal {
     }
 
     private void listarSeriesBuscadas(){
-        dadosSeries.forEach(System.out::println);
+        List<Serie> series = new ArrayList<>();
+        series = dadosSeries.stream()
+        .map(d -> new Serie(d)).collect(Collectors.toList());
+        series.stream().sorted(Comparator.comparing(Serie::getGenero)).forEach(System.out::println);
     }
 }
