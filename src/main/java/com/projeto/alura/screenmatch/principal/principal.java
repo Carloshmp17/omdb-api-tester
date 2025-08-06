@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.projeto.alura.screenmatch.model.DadosSerie;
 import com.projeto.alura.screenmatch.model.DadosTemporada;
@@ -19,7 +16,7 @@ public class principal {
 
     private Scanner leitura = new Scanner(System.in);
     private final String ENDERECO = "https://www.omdbapi.com/?t=";
-    private final String API_KEY = "&apikey=863e5770";
+    private final String API_KEY = System.getenv("API_KEY_OMDB");
     private ConsumoApi consumo = new ConsumoApi();
     private ConverteDados conversor = new ConverteDados();
     private List<DadosSerie> dadosSeries = new ArrayList<>();
@@ -99,9 +96,7 @@ public class principal {
     }
 
     private void listarSeriesBuscadas(){
-        List<Serie> series = new ArrayList<>();
-        series = dadosSeries.stream()
-        .map(d -> new Serie(d)).collect(Collectors.toList());
+        List<Serie> series = repositorio.findAll();
         series.stream().sorted(Comparator.comparing(Serie::getGenero)).forEach(System.out::println);
     }
 }
