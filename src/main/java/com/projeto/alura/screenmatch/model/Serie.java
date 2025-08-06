@@ -1,5 +1,7 @@
 package com.projeto.alura.screenmatch.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.OptionalDouble;
 
 import jakarta.persistence.Column;
@@ -10,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name="series")
@@ -33,6 +36,9 @@ public class Serie {
     private String poster;
     
     private String sinopse;
+
+    @Transient
+    private List<Episodio> episodios = new ArrayList<>();
 
     public Serie(DadosSerie dados){
         this.titulo = dados.titulo();
@@ -117,5 +123,13 @@ public class Serie {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public List<Episodio> getEpisodios() {
+        return episodios;
+    }
+
+    public void setEpisodios(List<Episodio> episodios) {
+        this.episodios = episodios;
     }
 }

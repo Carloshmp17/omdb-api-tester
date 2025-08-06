@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.projeto.alura.screenmatch.model.DadosSerie;
 import com.projeto.alura.screenmatch.model.DadosTemporada;
 import com.projeto.alura.screenmatch.model.Serie;
+import com.projeto.alura.screenmatch.repository.SerieRepository;
 import com.projeto.alura.screenmatch.service.ConsumoApi;
 import com.projeto.alura.screenmatch.service.ConverteDados;
 
@@ -20,6 +23,12 @@ public class principal {
     private ConsumoApi consumo = new ConsumoApi();
     private ConverteDados conversor = new ConverteDados();
     private List<DadosSerie> dadosSeries = new ArrayList<>();
+
+    private SerieRepository repositorio;
+
+    public principal(SerieRepository repositorio){
+        this.repositorio = repositorio;
+    }
 
     public void menu(){
         var opcao = -1;
@@ -60,7 +69,10 @@ public class principal {
     
     private void buscarSerieWeb(){
         DadosSerie dados = getDadosSerie();
-        dadosSeries.add(dados);
+        Serie serie = new Serie(dados);
+        // dadosSeries.add(dados);
+        repositorio.save(serie);
+
         System.out.println(dados);
     }
         
