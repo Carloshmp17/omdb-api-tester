@@ -2,13 +2,36 @@ package com.projeto.alura.screenmatch.model;
 
 import java.util.OptionalDouble;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name="series")
 public class Serie {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(unique=true)
     private String titulo;
+
     private Integer totalTemporadas;
+
     private Double avaliacao;
+
+    @Enumerated(EnumType.STRING)
     private Categoria genero;
+
     private String atores;
+
     private String poster;
+    
     private String sinopse;
 
     public Serie(DadosSerie dados){
@@ -86,5 +109,13 @@ public class Serie {
                 ", atores= " + atores +
                 ", poster= " + poster +
                 ", sinopse= " + sinopse;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }
